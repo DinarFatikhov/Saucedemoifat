@@ -1,5 +1,5 @@
 target/
 .idea/
 build/
-*.inl
+*.iml
 *.xml
