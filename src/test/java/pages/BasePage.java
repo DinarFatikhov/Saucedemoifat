@@ -19,6 +19,7 @@ public class BasePage {
     }
 
     public boolean pagesIsOpen() {
+
         return driver.findElement(pageName).isDisplayed();
     }
 }

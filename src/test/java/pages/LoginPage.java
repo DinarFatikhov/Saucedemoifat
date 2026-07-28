@@ -24,12 +24,13 @@ public class LoginPage extends BasePage {
         driver.findElement(loginBTN).click();
     }
 
-
     public boolean isErrorDisplayed() {
+
         return driver.findElement(error).isDisplayed();
     }
 
     public String getErrorText() {
+
         return driver.findElement(error).getText();
     }
 }

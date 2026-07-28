@@ -1,14 +1,13 @@
 package tests;
 
-import org.openqa.selenium.By;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.LoginPage;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class LoginTest extends BaseTest {
-    @Test(description = "Проверка верной авторизации", priority = 3)
+    @Test(description = "Проверка верной авторизации", priority = 1)
     public void login() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -17,49 +16,25 @@ public class LoginTest extends BaseTest {
         assertTrue(titleDisplayed);
         assertEquals(productsPage.getNamePage(), "Products",
                 "Name of the page doesn't correspond to the expected");
-
     }
 
-    @Test(priority = 2, invocationCount = 5)
-    public void incorrectLogin() {
-        loginPage.open();
-        loginPage.login("Standard_user", "secret_sauce");
-
-        assertTrue(loginPage.isErrorDisplayed());
-        assertEquals(loginPage.getErrorText(),
-                "Epic sadface: Username and password do not match any user in this service");
+    @DataProvider()
+    public  Object[][] loginData() {
+        return new Object[][] {
+                {"Standard_user", "secret_sauce", "Epic sadface: Username and password do not match any user in this service"},
+                {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
+                {"", "secret_sauce", "Epic sadface: Username is required"},
+                {"standard_user", "", "Epic sadface: Password is required"}
+        };
     }
 
-    @Test(priority = 1)
-    public void lockedUserLogin() {
+    @Test(priority = 2, invocationCount = 1, dataProvider = "loginData")
+    public void incorrectLogin(String user, String password, String errorMsg) {
         loginPage.open();
-        loginPage.login("locked_out_user", "secret_sauce");
+        loginPage.login(user, password);
 
         assertTrue(loginPage.isErrorDisplayed());
-        assertEquals(loginPage.getErrorText(),
-                "Epic sadface: Sorry, this user has been locked out.");
-
-    }
-
-    @Test(priority = 4)
-    public void emptyUserLogin() {
-        loginPage.open();
-        loginPage.login("", "secret_sauce");
-
-        assertTrue(loginPage.isErrorDisplayed());
-        assertEquals(loginPage.getErrorText(),
-                "Epic sadface: Username is required");
-    }
-
-    @Test(priority = 5)
-    public void emptyPasswordLogin() {
-        loginPage.open();
-        loginPage.login("standard_user", "");
-
-
-        assertTrue(loginPage.isErrorDisplayed());
-        assertEquals(loginPage.getErrorText(),
-                "Epic sadface: Password is required");
+        assertEquals(loginPage.getErrorText(), errorMsg);
     }
 }
 
