@@ -28,10 +28,8 @@ public class BaseTest {
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
     }
-
-    //@AfterMethod
-    //public void close() {
-        //driver.quit();
-    //}
-
+    @AfterMethod
+    public void close() {
+    driver.quit();
+    }
 }
