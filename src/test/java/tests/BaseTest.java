@@ -21,7 +21,7 @@ public class BaseTest {
         options.addArguments("--incognito");
         options.addArguments("--guest");
         options.addArguments("start-maximized");
-        //options.addArguments("headless");
+        options.addArguments("headless");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
 

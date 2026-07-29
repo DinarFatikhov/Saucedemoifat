@@ -8,8 +8,6 @@ public class LoginPage extends BasePage {
     private final By passwordInput = By.xpath("//*[@id='password']");
     private final By loginBTN = By.xpath("//*[@value='Login']");
     private final By error = By.xpath("//h3[@data-test='error']");
-
-
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -25,13 +23,10 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isErrorDisplayed() {
-
         return driver.findElement(error).isDisplayed();
     }
 
     public String getErrorText() {
-
         return driver.findElement(error).getText();
     }
 }
-

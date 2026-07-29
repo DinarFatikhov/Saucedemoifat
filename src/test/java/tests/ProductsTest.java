@@ -17,9 +17,6 @@ public class ProductsTest extends BaseTest {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
         productsPage.pagesIsOpen();
-
-
-
         for (String goodName : goodsList){
             productsPage.addToCart(goodName);
         }
@@ -27,6 +24,5 @@ public class ProductsTest extends BaseTest {
         productsPage.addToCart(2);
         assertEquals(productsPage.checkCounterValue(), "4");
         assertEquals(productsPage.checkCounterColor(), "rgba(226, 35, 26, 1)");
-
     }
 }

@@ -8,8 +8,6 @@ public class ProductsPage extends BasePage {
     private final By pageName = By.xpath("//span[@data-test='title']");
     private final By counter = By.xpath("//span[@data-test='shopping-cart-badge']");
     private final By addToCartBnt = By.xpath("//*[text()='Add to cart']");
-
-    //String.format
     public ProductsPage(WebDriver driver) {
         super(driver);
     }
@@ -36,4 +34,3 @@ public class ProductsPage extends BasePage {
           return driver.findElement(counter).getCssValue("background-color");
     }
  }
-
