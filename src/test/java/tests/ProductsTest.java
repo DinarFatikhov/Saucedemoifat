@@ -4,7 +4,9 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static enums.TitleNaming.PRODUCTS;
 import static org.testng.Assert.assertEquals;
+import static user.UserFactory.withAdminPermission;
 
 public class ProductsTest extends BaseTest {
     List<String> goodsList =
@@ -14,9 +16,13 @@ public class ProductsTest extends BaseTest {
 
     @Test
     public void checkGoodsAdded() {
+        System.out.println("ProductsTest.checkGoodsAdded running is thread: " + Thread.currentThread().getId());
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(withAdminPermission());
+        assertEquals(productsPage.getNamePage(), PRODUCTS.getDisplayName(),
+                "Name of the page doesn't correspond to the expected");
         productsPage.pagesIsOpen();
+
         for (String goodName : goodsList){
             productsPage.addToCart(goodName);
         }

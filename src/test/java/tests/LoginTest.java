@@ -2,36 +2,41 @@ package tests;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import user.User;
 
+import static enums.TitleNaming.PRODUCTS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static user.UserFactory.*;
 
 public class LoginTest extends BaseTest {
     @Test(description = "Проверка верной авторизации", priority = 1)
     public void login() {
+        System.out.println("LoginTest.login running is thread: " + Thread.currentThread().getId());
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(withAdminPermission());
         boolean titleDisplayed = productsPage.pagesIsOpen();
 
         assertTrue(titleDisplayed);
-        assertEquals(productsPage.getNamePage(), "Products",
+        assertEquals(productsPage.getNamePage(), PRODUCTS.getDisplayName(),
                 "Name of the page doesn't correspond to the expected");
     }
 
     @DataProvider()
     public  Object[][] loginData() {
         return new Object[][] {
-                {"Standard_user", "secret_sauce", "Epic sadface: Username and password do not match any user in this service"},
-                {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
-                {"", "secret_sauce", "Epic sadface: Username is required"},
-                {"standard_user", "", "Epic sadface: Password is required"}
+                {withIncorrectPermission(), "Epic sadface: Username and password do not match any user in this service"},
+                {withLockedAdminPermission(), "Epic sadface: Sorry, this user has been locked out."},
+                {new User("", "secret_sauce"), "Epic sadface: Username is required"},
+                {new User("standard_user", ""), "Epic sadface: Password is required"}
         };
     }
 
     @Test(priority = 2, invocationCount = 1, dataProvider = "loginData")
-    public void incorrectLogin(String user, String password, String errorMsg) {
+    public void incorrectLogin(User user, String errorMsg) {
+        System.out.println("LoginTest.incorrectLogin running is thread: " + Thread.currentThread().getId());
         loginPage.open();
-        loginPage.login(user, password);
+        loginPage.login(user);
 
         assertTrue(loginPage.isErrorDisplayed());
         assertEquals(loginPage.getErrorText(), errorMsg);

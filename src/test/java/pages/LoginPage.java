@@ -2,12 +2,13 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import user.User;
 
 public class LoginPage extends BasePage {
     private final By loginInput = By.xpath("//*[@id='user-name']");
     private final By passwordInput = By.xpath("//*[@id='password']");
     private final By loginBTN = By.xpath("//*[@value='Login']");
-    private final By error = By.xpath("//h3[@data-test='error']");
+    private final By error = By.xpath(DATA_TEST_PATTERN.formatted("error"));
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -16,9 +17,9 @@ public class LoginPage extends BasePage {
         driver.get(BASE_URL);
     }
 
-    public void login(final String userName, final String password) {
-        driver.findElement(loginInput).sendKeys(userName);
-        driver.findElement(passwordInput).sendKeys(password);
+    public void login(User user) {
+        driver.findElement(loginInput).sendKeys(user.getLogin());
+        driver.findElement(passwordInput).sendKeys(user.getPassword());
         driver.findElement(loginBTN).click();
     }
 
