@@ -11,7 +11,7 @@ public class BasePage {
     public static final String TEXT_LOCATOR_PATTERN = "//*[text()='%s']";
 
     public static final String BASE_URL = PropertyReader.getProperty("saucedemmo.url");
-    private final By pageName = By.xpath("//span[@data-test='title']");
+    private final By pageName = By.xpath(String.format(DATA_TEST_PATTERN, "title"));
 
     WebDriver driver;
     WebDriverWait wait;

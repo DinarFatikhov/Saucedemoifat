@@ -9,13 +9,15 @@ import java.util.List;
 
 public class CartPage extends BasePage {
 
+    private final By productsNames = By.cssSelector(".inventory_item_name");
+
     public CartPage(WebDriver driver) {
         super(driver);
     }
 
     public ArrayList<String> getProductsNames() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item_name")));
-        List<WebElement> allProductsNames = driver.findElements(By.cssSelector(".inventory_item_name"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productsNames));
+        List<WebElement> allProductsNames = driver.findElements(productsNames);
         ArrayList<String> names = new ArrayList<>();
 
         for (WebElement productBlock : allProductsNames) {

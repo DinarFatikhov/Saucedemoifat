@@ -1,23 +1,17 @@
 package enums;
 
 public enum TitleNaming {
-    PRODUCTS("Products", "prod"),
-    CART("Your Cart", ""),
-    CHECKOUT("Checkout: Your Information", "");
-
-    TitleNaming(String displayName, String shortName) {
-        this.displayName = displayName;
-        this.shortName = shortName;
-    }
+    PRODUCTS("Products"),
+    CART("Your Cart"),
+    CHECKOUT("Checkout: Your Information");
 
     private final String displayName;
-    private final String shortName;
 
-        public String getDisplayName() {
-            return displayName;
-        }
+    TitleNaming(String displayName) {
+        this.displayName = displayName;
+    }
 
-        public String getShortName() {
-            return shortName;
-        }
+    public String getDisplayName() {
+        return displayName;
+    }
 }
