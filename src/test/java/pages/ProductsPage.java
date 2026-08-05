@@ -5,15 +5,13 @@ import org.openqa.selenium.WebDriver;
 
 public class ProductsPage extends BasePage {
     private static final String ADD_TO_CART = "//*[text()='%s']//ancestor::div[@class='inventory_item']//child::*[text()='Add to cart']";
-    private final By pageName = By.xpath("//span[@data-test='title']");
-    private final By counter = By.xpath("//span[@data-test='shopping-cart-badge']");
-    private final By addToCartBnt = By.xpath("//*[text()='Add to cart']");
+    private final By pageName = By.xpath(DATA_TEST_PATTERN.formatted("title"));
+    private final By counter = By.xpath(DATA_TEST_PATTERN.formatted("shopping-cart-badge"));
+    private final By cartLink = By.xpath(DATA_TEST_PATTERN.formatted("shopping-cart-link"));
+    private final By addToCartBnt = By.xpath(TEXT_LOCATOR_PATTERN.formatted("Add to cart"));
+
     public ProductsPage(WebDriver driver) {
         super(driver);
-    }
-
-    public String getNamePage() {
-        return driver.findElement(pageName).getText();
     }
 
     public void addToCart(final String goodsName) {
@@ -26,11 +24,15 @@ public class ProductsPage extends BasePage {
         driver.findElements(addToCartBnt).get(goodsIndex).click();
     }
 
-        public String checkCounterValue() {
-          return driver.findElement(counter).getText();
+    public String checkCounterValue() {
+        return driver.findElement(counter).getText();
     }
 
-        public String checkCounterColor() {
-          return driver.findElement(counter).getCssValue("background-color");
+    public String checkCounterColor() {
+        return driver.findElement(counter).getCssValue("background-color");
+    }
+
+    public void switchToCart() {
+         driver.findElement(cartLink).click();
     }
  }

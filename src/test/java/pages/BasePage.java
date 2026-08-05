@@ -3,11 +3,15 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.PropertyReader;
 import java.time.Duration;
 
 public class BasePage {
-    public static final String BASE_URL = "https://www.saucedemo.com/";
-    private final By pageName = By.xpath("//span[@data-test='title']");
+    public static final String DATA_TEST_PATTERN = "//*[@data-test='%s']";
+    public static final String TEXT_LOCATOR_PATTERN = "//*[text()='%s']";
+
+    public static final String BASE_URL = PropertyReader.getProperty("saucedemmo.url");
+    private final By pageName = By.xpath(String.format(DATA_TEST_PATTERN, "title"));
 
     WebDriver driver;
     WebDriverWait wait;
@@ -18,7 +22,10 @@ public class BasePage {
     }
 
     public boolean pagesIsOpen() {
-
         return driver.findElement(pageName).isDisplayed();
+    }
+
+    public String getNamePage() {
+        return driver.findElement(pageName).getText();
     }
 }
