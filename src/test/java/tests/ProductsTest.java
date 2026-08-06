@@ -15,7 +15,6 @@ import static user.UserFactory.withAdminPermission;
 @Epic("Интернет-магазин")
 @Feature("Каталог товаров")
 @Owner("Fatikhov Dinar Din@com.com")
-
 public class ProductsTest extends BaseTest {
     List<String> goodsList =
             List.of("Sauce Labs Bolt T-Shirt",
