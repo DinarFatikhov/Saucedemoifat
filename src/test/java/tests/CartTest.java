@@ -1,5 +1,7 @@
 package tests;
 
+import io.qameta.allure.*;
+import jdk.jfr.Description;
 import org.testng.annotations.Test;
 import user.UserFactory;
 
@@ -9,11 +11,19 @@ import static enums.TitleNaming.CART;
 import static enums.TitleNaming.PRODUCTS;
 import static org.testng.Assert.*;
 
+@Epic("Интернет-магазин")
+@Feature("Корзина")
+@Owner("Fatikhov Dinar Din@com.com")
+
 public class CartTest extends BaseTest {
     List<String> goodsList =
             List.of("Sauce Labs Bolt T-Shirt",
                     "Sauce Labs Bike Light",
                     "Sauce Labs Fleece Jacket");
+
+    @Story("Добавление товаров в корзину")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка, что пользователь может добавить товары в корзину и увидеть их в списке")
     @Test
     public void checkGoodAdded() {
         System.out.println("CartTest.checkGoodAdded running is thread: " + Thread.currentThread().getId());

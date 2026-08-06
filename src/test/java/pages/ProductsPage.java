@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -24,14 +25,17 @@ public class ProductsPage extends BasePage {
         driver.findElements(addToCartBnt).get(goodsIndex).click();
     }
 
+    @Step("Получение значения счетчика товаров в корзине")
     public String checkCounterValue() {
         return driver.findElement(counter).getText();
     }
 
+    @Step("Получение цвета счетчика корзины")
     public String checkCounterColor() {
         return driver.findElement(counter).getCssValue("background-color");
     }
 
+    @Step("Переход на страницу корзины")
     public void switchToCart() {
          driver.findElement(cartLink).click();
     }
