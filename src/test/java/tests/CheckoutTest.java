@@ -36,7 +36,8 @@ public class CheckoutTest extends BaseTest {
         assertEquals(cartPage.getProductsNames().size(), 3,
                 "Количество товаров в корзине не соответствует ожидаемому");
 
-        cartPage.clickCheckout();checkoutPage.fillCustomerInformation(
+        cartPage.clickCheckout();
+        checkoutPage.fillCustomerInformation(
                 "Ivan",
                 "Ivanov",
                 "12345");
