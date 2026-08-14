@@ -10,46 +10,62 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.CartPage;
+import pages.CheckoutPage;
+import pages.CompletePage;
 import pages.LoginPage;
+import pages.OverviewPage;
 import pages.ProductsPage;
 import utils.TestListener;
-
 import java.time.Duration;
 
 @Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
+
     public WebDriver driver;
+
     LoginPage loginPage;
     ProductsPage productsPage;
     CartPage cartPage;
+    CheckoutPage checkoutPage;
+    OverviewPage overviewPage;
+    CompletePage completePage;
 
     @Parameters({"browser"})
     @BeforeMethod
     public void setup(@Optional("chrome") String browser, ITestContext context) {
+
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--incognito");
-            //options.addArguments("--guest");
+            options.addArguments("--guest");
             options.addArguments("start-maximized");
             options.addArguments("headless");
+
             driver = new ChromeDriver(options);
+
         } else if (browser.equalsIgnoreCase("edge")) {
+
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
         }
 
         context.setAttribute("driver", driver);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
+
+        driver.manage().timeouts()
+                .implicitlyWait(Duration.ofSeconds(7));
+
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);
+        checkoutPage = new CheckoutPage(driver);
+        overviewPage = new OverviewPage(driver);
+        completePage = new CompletePage(driver);
     }
-
 
     @Step("Закрытие браузера")
     @AfterMethod
     public void close() {
-    driver.quit();
+        driver.quit();
     }
 }

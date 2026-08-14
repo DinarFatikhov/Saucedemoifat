@@ -9,21 +9,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartPage extends BasePage {
-
     private final By productsNames = By.cssSelector(".inventory_item_name");
+    private final By checkoutButton = By.xpath(DATA_TEST_PATTERN.formatted("checkout"));
 
     public CartPage(WebDriver driver) {
         super(driver);
     }
+
     @Step("Получение списка товаров из корзины")
     public ArrayList<String> getProductsNames() {
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(productsNames));
         List<WebElement> allProductsNames = driver.findElements(productsNames);
+
         ArrayList<String> names = new ArrayList<>();
 
         for (WebElement productBlock : allProductsNames) {
-             names.add(productBlock.getText());
+            names.add(productBlock.getText());
         }
+
         return names;
+    }
+
+    @Step("Переход к оформлению заказа")
+    public void clickCheckout() {
+        driver.findElement(checkoutButton).click();
     }
 }
